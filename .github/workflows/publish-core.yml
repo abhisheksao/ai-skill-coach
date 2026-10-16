@@ -1,0 +1,40 @@
+name: Publish app core
+
+# Publishes app/packages/core (@abhisheksao/ai-skill-coach-core) to GitHub
+# Packages when a vX.Y.Z tag is pushed. The tag must match the package's
+# "version"; bump app/packages/core/package.json first, then tag.
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app/packages/core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+          scope: "@abhisheksao"
+      - name: Tag matches package version
+        if: github.event_name == 'push'
+        run: |
+          pkg="v$(node -p "require('./package.json').version")"
+          if [ "$pkg" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::tag $GITHUB_REF_NAME != package version $pkg"; exit 1
+          fi
+      - name: Bundle license files
+        run: cp ../../../LICENSE ../../../NOTICE .
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

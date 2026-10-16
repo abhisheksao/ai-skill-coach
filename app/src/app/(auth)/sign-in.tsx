@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { PrimaryButton } from '@ai-skill-coach/core/components/primary-button';
-import { Screen } from '@ai-skill-coach/core/components/screen';
-import { TextField } from '@ai-skill-coach/core/components/text-field';
+import { PrimaryButton } from '@abhisheksao/ai-skill-coach-core/components/primary-button';
+import { Screen } from '@abhisheksao/ai-skill-coach-core/components/screen';
+import { TextField } from '@abhisheksao/ai-skill-coach-core/components/text-field';
 import { signInWithApple, signInWithGoogle } from '@/lib/oauth';
 import { supabase } from '@/lib/supabase';
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 export default function SignIn() {
   const { t } = useTranslation();

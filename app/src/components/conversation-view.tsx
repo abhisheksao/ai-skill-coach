@@ -11,13 +11,13 @@ import {
   View,
 } from 'react-native';
 
-import { ChatBubble } from '@ai-skill-coach/core/components/chat-bubble';
-import { LoadingDots } from '@ai-skill-coach/core/components/loading-dots';
+import { ChatBubble } from '@abhisheksao/ai-skill-coach-core/components/chat-bubble';
+import { LoadingDots } from '@abhisheksao/ai-skill-coach-core/components/loading-dots';
 import { ChatMessage } from '@/hooks/use-chat-session';
-import { useVoiceSession } from '@ai-skill-coach/core/use-voice-session';
+import { useVoiceSession } from '@abhisheksao/ai-skill-coach-core/use-voice-session';
 import { Modality } from '@/lib/api';
-import { getVoiceCapabilities, resolveMicDisabledReason, VoiceCapabilities } from '@ai-skill-coach/core/voice-capabilities';
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { getVoiceCapabilities, resolveMicDisabledReason, VoiceCapabilities } from '@abhisheksao/ai-skill-coach-core/voice-capabilities';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 type Props = {
   messages: ChatMessage[];

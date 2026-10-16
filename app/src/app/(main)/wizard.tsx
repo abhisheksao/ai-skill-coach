@@ -2,10 +2,10 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ConversationView } from '@/components/conversation-view';
-import { Screen } from '@ai-skill-coach/core/components/screen';
+import { Screen } from '@abhisheksao/ai-skill-coach-core/components/screen';
 import { useChatSession } from '@/hooks/use-chat-session';
 import { useAuth } from '@/lib/auth-context';
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 /** Wizard onboarding (User Story 1): no skill exists yet. Reuses the same
  * conversation UI/pipeline as ongoing chat (Constitution IV) -- the only

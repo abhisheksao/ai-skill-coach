@@ -6,7 +6,7 @@ import '@/i18n';
 import { usePushNotifications } from '@/hooks/use-push-notifications';
 import { AuthProvider, useAuth } from '@/lib/auth-context';
 import { isWelcomeSeen, resolveOnboardingRedirect } from '@/lib/onboarding';
-import { useTheme } from '@ai-skill-coach/core/theme';
+import { useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 SplashScreen.preventAutoHideAsync();
 

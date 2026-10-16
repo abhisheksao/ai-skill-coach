@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { SupportedLanguage } from '@/i18n';
-import { type, useTheme } from '@ai-skill-coach/core/theme';
+import { type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 const LANGUAGES: { code: SupportedLanguage; native: string }[] = [
   { code: 'en', native: 'English' },

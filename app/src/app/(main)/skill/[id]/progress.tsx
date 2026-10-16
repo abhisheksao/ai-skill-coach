@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Screen } from '@ai-skill-coach/core/components/screen';
+import { Screen } from '@abhisheksao/ai-skill-coach-core/components/screen';
 import { ApiError, getSkill, getSkillProgress, SkillDetail, SkillProgress } from '@/lib/api';
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 /** Per-skill progress view (User Story 2): completed steps, streak, and
  * per-step cadence adherence — all derived server-side from CheckIn
