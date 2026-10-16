@@ -1,0 +1,60 @@
+-- Scheduled jobs for cadence nudges and session summaries (feature 004).
+--
+-- Not a migration on purpose: the jobs call YOUR deployed API with YOUR
+-- shared secret, so the values differ per deployment. scripts/bootstrap.sh
+-- renders this file to supabase/.temp/cron.sql (gitignored) with the
+-- placeholders filled in. Paste that file into the Supabase SQL editor,
+-- or run it with psql.
+--
+--   {{API_URL}}          public base URL of the FastAPI backend, no trailing /
+--   {{INTERNAL_SECRET}}  same value as INTERNAL_SECRET in the API's env
+--
+-- Re-running is safe: cron.schedule() replaces a job with the same name.
+
+create extension if not exists pg_cron with schema pg_catalog;
+create extension if not exists pg_net with schema extensions;
+
+-- Cadence nudges. The API sends only between 08:00 and 20:00 in each
+-- user's own timezone and caps sends (1 per skill per day, 3 per week), so
+-- an hourly scan reaches every timezone without double-sending. One run a
+-- day at a fixed UTC hour also works, but only for users whose local time
+-- is in the sending window at that hour.
+select cron.schedule(
+  'skill-coach-notification-scan',
+  '0 * * * *',
+  $$
+  select net.http_post(
+    url := '{{API_URL}}/v1/internal/notifications/scan',
+    headers := jsonb_build_object(
+      'Content-Type', 'application/json',
+      'X-Internal-Secret', '{{INTERNAL_SECRET}}'
+    ),
+    body := '{}'::jsonb,
+    timeout_milliseconds := 60000
+  );
+  $$
+);
+
+-- Session summaries: every 15 minutes, turns each conversation idle for
+-- 30+ minutes (SESSION_INACTIVITY_MINUTES) into a Session summary that the
+-- coach reads at the start of the next session.
+select cron.schedule(
+  'skill-coach-session-summarize',
+  '*/15 * * * *',
+  $$
+  select net.http_post(
+    url := '{{API_URL}}/v1/internal/sessions/summarize',
+    headers := jsonb_build_object(
+      'Content-Type', 'application/json',
+      'X-Internal-Secret', '{{INTERNAL_SECRET}}'
+    ),
+    body := '{}'::jsonb,
+    timeout_milliseconds := 60000
+  );
+  $$
+);
+
+-- Check that the jobs ran:
+--   select jobname, status, start_time, return_message
+--   from cron.job_run_details order by start_time desc limit 10;
+--   select status_code, content from net._http_response order by created desc limit 10;

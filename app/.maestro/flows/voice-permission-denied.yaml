@@ -1,0 +1,43 @@
+appId: com.anonymous.skillcoach
+---
+# 003 US3 -- native permission denial. Device-dependent like the other
+# voice-*.yaml flows. Requires a FRESH app install (clearState: true).
+# Pre-denies the mic permission via launchApp's `permissions` map rather
+# than racing a live OS dialog tap -- Maestro auto-grants runtime
+# permissions by default (see voice-push-to-talk.yaml's note), which was
+# silently defeating the "tap Don't Allow" step below on real runs.
+# Run live 2026-07-17 on a physical OnePlus 3 (Android 9, API 28).
+- launchApp:
+    clearState: true
+    permissions:
+      microphone: deny
+# Cold start on this device is genuinely slow to clear the splash screen
+# (see voice-push-to-talk.yaml's same fix, confirmed live). clearState
+# here guarantees sign-in is actually needed, so no conditional check.
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 60000
+- runFlow: shared/sign-in.yaml
+- extendedWaitUntil:
+    visible: "Add skill"
+    timeout: 60000
+# "Add skill" not "Skill Coach" -- see voice-push-to-talk.yaml's note,
+# same race against the sign-in screen's own branding text.
+- tapOn: "Add skill"
+- inputText: "Maestro Permission Test"
+- tapOn: "Continue"
+- assertVisible: "Speak"
+- longPressOn: "Speak"
+# The OS permission dialog appears here. Deny it (button label is
+# platform-specific -- "Don't Allow" on iOS, "Deny"/"Don't allow" on
+# Android).
+- tapOn:
+    text: "Don't Allow|Deny|Don't allow"
+    optional: true
+# Guidance text should now be visible, and chat still works.
+- assertVisible: "Voice is off because microphone access was denied"
+- tapOn:
+    below: "Send"
+    optional: true
+- inputText: "Still works by text"
+- assertVisible: "Still works by text"

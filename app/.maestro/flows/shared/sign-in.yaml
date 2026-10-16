@@ -1,0 +1,27 @@
+appId: com.anonymous.skillcoach
+---
+# Reusable subflow (`runFlow`): fills and submits the sign-in form. Assumes
+# the app is already showing /sign-in. Kept UI-assertion-only, no DB client
+# available in Maestro YAML -- Playwright is the suite with DB truth.
+#
+# Real bug found running this live 2026-08-27: the sign-in screen's heading
+# and its submit button both render the literal text "Sign in" (both pull
+# from the same `t('auth.signIn')` i18n key) -- `tapOn: "Sign in"` matched
+# the non-interactive heading instead of the button, silently no-opping
+# every single call site of this subflow (session-persists.yaml,
+# voice-push-to-talk.yaml, voice-permission-denied.yaml,
+# voice-failures-005.yaml). Fixed the same way this codebase already
+# disambiguates identical-text locators elsewhere (dashboard's
+# `dashboard-card-${skill_id}` testID, 004 T019): added a `sign-in-submit`
+# testID to the button (app/src/app/(auth)/sign-in.tsx +
+# app/src/components/primary-button.tsx) and tap by id here instead.
+- tapOn:
+    below: "Email"
+- inputText: "${MAESTRO_EMAIL}"
+- hideKeyboard
+- tapOn:
+    below: "Password"
+- inputText: "${MAESTRO_PASSWORD}"
+- hideKeyboard
+- tapOn:
+    id: "sign-in-submit"

@@ -1,0 +1,93 @@
+[project]
+name = "skillcoach-api"
+version = "0.1.0"
+description = "Skill Coach backend: auth-gated chat pipeline, coaching graph, budget-guarded LLM calls"
+readme = "README.md"
+authors = [
+    { name = "Abhishek Sao", email = "10073286+abhisheksao@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "coach-core",
+    "fastapi>=0.139.0",
+    "httpx>=0.28.1",
+    "langchain-google-genai>=4.2.7",
+    "neo4j>=6.2.0",
+    "pydantic-settings>=2.14.2",
+    "pyjwt[crypto]>=2.13.0",
+    "supabase>=2.31.0",
+    "tenacity>=9.1.4",
+    "uvicorn[standard]>=0.51.0",
+]
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+coach-core = { workspace = true }
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.15.21",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests", "packages/coach-core/src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+# --strict-markers turns a typo'd -m expression into a collection error
+# instead of a silent "0 tests ran" -- important now that the marker set
+# is how feature/workflow suites get run (Constitution VIII, 2026-07-14).
+addopts = "--strict-markers"
+markers = [
+    # Feature markers -- run one feature's full backend suite.
+    "foundations: feature 001 (auth, chat pipeline base, profile)",
+    "wizard_plan: feature 002 (wizard, plan generation/review, skills list)",
+    "voice_layer: feature 003 (modality plumbing, voice_replies_enabled preference)",
+    "progress_notifications: feature 004 (check-ins, progress derivation, cadence nudges, dashboard, session continuity)",
+    "hardening: feature 005 (rate-limit queue, budget turn, export/restore, analytics, ops views)",
+    # Domain/workflow markers -- run one concern across whichever files touch it.
+    "auth: JWT verification and request authentication",
+    "budget: per-user daily LLM budget guard",
+    "chat: /v1/chat contract and pipeline",
+    "wizard: wizard onboarding conversation flow",
+    "context: ContextBuilder (per-turn context assembly)",
+    "graph: Neo4j GraphService (:User) lifecycle",
+    "intents: intent Pydantic schemas and intent->Cypher translation",
+    "llm: LlmService (retries, degradation, provider calls)",
+    "messages: MessageStore (Supabase message persistence)",
+    "plan: plan generation/regeneration/similarity logic",
+    "profile: profile-step persistence and validation",
+    "skills: skills list/detail read services and routes",
+    "regenerate: plan regeneration flow, incl. the attempt cap",
+    "tenancy: cross-user/cross-skill isolation",
+    "container: service-container dependency wiring",
+    "supabase: SupabaseRest PostgREST client",
+    "config: Settings/env parsing",
+    "logging: structured request logging",
+    "prompts: LLM system-prompt builders",
+    "models: direct Pydantic schema validation (no HTTP/service layer)",
+    "smoke: trivial boot/health checks",
+    "checkins: CheckIn write path (conversational + UI-native intents)",
+    "progress: ProgressService derivation (streak, cadence adherence, completed steps)",
+    "cadence: cadence schedule sync + behind-cadence detection",
+    "notifications: push-token lifecycle, frequency cap/quiet hours, delivery",
+    "dashboard: home dashboard aggregation endpoint",
+    "sessions: session-summary continuity (inactivity detection, summarization)",
+    "queue: LlmQueue admission/pacing (FIFO, token bucket, wait timeout)",
+    "analytics: AnalyticsService event emission and ops_* view seams",
+    "ops: operator scripts (export/restore/spend-check/delete-user) and their tests",
+]

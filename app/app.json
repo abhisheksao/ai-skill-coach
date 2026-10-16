@@ -1,0 +1,74 @@
+{
+  "expo": {
+    "name": "Skill Coach",
+    "slug": "skill-coach",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "skillcoach",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.anonymous.skillcoach",
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true,
+        "NSSpeechRecognitionUsageDescription": "Allow $(PRODUCT_NAME) to use speech recognition to turn what you say into text.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to use the microphone to hear you during a coaching session."
+      }
+    },
+    "locales": {
+      "en": "./assets/locales/en.json",
+      "hi": "./assets/locales/hi.json",
+      "es": "./assets/locales/es.json",
+      "fr": "./assets/locales/fr.json",
+      "de": "./assets/locales/de.json"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F8FAFC",
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.skillcoach",
+      "softwareKeyboardLayoutMode": "resize",
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F8FAFC",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 160,
+          "dark": {
+            "backgroundColor": "#0F172A"
+          }
+        }
+      ],
+      "expo-secure-store",
+      "expo-web-browser",
+      "expo-localization",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to use the microphone to hear you during a coaching session.",
+          "speechRecognitionPermission": "Allow $(PRODUCT_NAME) to use speech recognition to turn what you say into text.",
+          "androidSpeechServicePackages": [
+            "com.google.android.googlequicksearchbox"
+          ]
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

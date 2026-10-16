@@ -1,0 +1,35 @@
+name: Spend Check
+
+# 005, research.md R6: one of three scheduled workflows whose FAILURE is
+# the alert -- GitHub's own workflow-failure email reaches the repo owner,
+# zero new vendors/secrets. Deliberately failed once via workflow_dispatch
+# (threshold_override: "0") during quickstart validation to prove the
+# email actually arrives before this is trusted for real.
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # daily, 03:00 UTC
+  workflow_dispatch:
+    inputs:
+      threshold_override:
+        description: "Override SPEND_ALERT_THRESHOLD_USD for this run (e.g. 0 to force a failure)"
+        required: false
+
+jobs:
+  spend-check:
+    if: ${{ vars.OPS_WORKFLOWS_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    env:
+      # Operator-tunable without redeploying the API -- edit this default
+      # (or pass threshold_override on a manual dispatch) directly.
+      SPEND_ALERT_THRESHOLD_USD: ${{ inputs.threshold_override || '5.0' }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
+      - run: uv run python scripts/spend_check.py

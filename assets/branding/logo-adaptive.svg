@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Android adaptive-icon foreground: mark scaled to the ~66% safe zone -->
+  <defs>
+    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(256 256) scale(0.66) translate(-256 -256)">
+    <circle cx="256" cy="256" r="248" fill="url(#brand)"/>
+    <circle cx="256" cy="256" r="248" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="8"/>
+    <g fill="#FFFFFF">
+      <rect x="128" y="300" width="64" height="84" rx="22" fill-opacity="0.62"/>
+      <rect x="216" y="252" width="64" height="132" rx="22" fill-opacity="0.8"/>
+      <rect x="304" y="196" width="64" height="188" rx="22"/>
+    </g>
+    <path d="M 132 268 C 210 258 268 222 332 148"
+          fill="none" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round"/>
+    <circle cx="352" cy="126" r="26" fill="#FFFFFF"/>
+    <circle cx="352" cy="126" r="40" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="10"/>
+  </g>
+</svg>

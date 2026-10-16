@@ -1,0 +1,117 @@
+{
+  "common": {
+    "appName": "Skill Coach",
+    "continue": "Continuar",
+    "retry": "Reintentar",
+    "loading": "Cargando…",
+    "or": "o",
+    "save": "Guardar cambios",
+    "cancel": "Cancelar"
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Crear cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "signInWithGoogle": "Continuar con Google",
+    "signInWithApple": "Continuar con Apple",
+    "noAccount": "¿Nuevo aquí? Crea una cuenta",
+    "haveAccount": "¿Ya tienes cuenta? Inicia sesión",
+    "signOut": "Cerrar sesión",
+    "errors": {
+      "invalidCredentials": "El correo o la contraseña no coinciden.",
+      "accountExists": "Ya existe una cuenta con este correo: inicia sesión.",
+      "generic": "No se pudo iniciar sesión. Inténtalo de nuevo."
+    },
+    "checkEmail": "Revisa tu correo para confirmar tu cuenta y luego inicia sesión."
+  },
+  "profile": {
+    "title": "Casi listo",
+    "subtitle": "Un par de detalles antes de empezar.",
+    "language": "Idioma",
+    "displayName": "¿Cómo debería llamarte el coach? (opcional)",
+    "consent": "Acepto la política de privacidad y uso de datos",
+    "viewPolicy": "Leer la política"
+  },
+  "chat": {
+    "placeholder": "Escribe a tu coach…",
+    "send": "Enviar",
+    "emptyState": "Saluda a tu coach para empezar.",
+    "sendFailed": "No enviado",
+    "retrySend": "Reintentar"
+  },
+  "voice": {
+    "micButtonLabel": "Hablar",
+    "listening": "Escuchando…",
+    "lowConfidenceHint": "No estamos seguros de haber entendido bien — revisa antes de enviar.",
+    "spokenReplies": "Respuestas habladas",
+    "permissionDeniedGuidance": "La voz está desactivada porque se denegó el acceso al micrófono. Actívalo en los ajustes del dispositivo para usar la voz.",
+    "unavailableGuidance": "La voz no está disponible en este dispositivo por ahora. Puedes seguir usando el chat.",
+    "holdToSpeak": "Mantén presionado para hablar",
+    "connectionLost": "Se perdió la conexión — tus palabras están guardadas abajo. Revisa tu conexión e inténtalo de nuevo.",
+    "audioFocusLost": "Interrumpido — tus palabras están guardadas abajo. Toca el micrófono para continuar cuando quieras.",
+    "ttsUnavailableBanner": "Las respuestas habladas no funcionan ahora — las respuestas seguirán apareciendo como texto."
+  },
+  "onboarding": {
+    "pushToTalkTitle": "Mantén presionado para hablar",
+    "pushToTalkBody": "Mantén presionado el botón del micrófono en cualquier momento para hablar con tu coach en vez de escribir.",
+    "notificationsTitle": "Mantente al día",
+    "notificationsBody": "Te enviaremos un recordatorio suave si te retrasas en un paso — solo cuando sea útil, nunca de forma molesta.",
+    "skip": "Omitir",
+    "enableNudges": "Activar recordatorios"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "saved": "Guardado.",
+    "deleteAccount": "Eliminar cuenta"
+  },
+  "errors": {
+    "budget_exceeded": "Has llegado al límite de coaching de hoy. ¡Seguimos mañana!",
+    "budget_exhausted_reply": "He llegado al límite de conversación de hoy por ahora — estaré listo de nuevo alrededor de las {{resetTime}}.",
+    "llm_unavailable": "El coach no pudo responder ahora. Inténtalo de nuevo.",
+    "network": "Sin conexión. Tu mensaje está guardado: reintenta cuando vuelvas a estar en línea.",
+    "unauthorized": "Tu sesión caducó. Inicia sesión de nuevo.",
+    "validation": "Algo no cuadra: revísalo e inténtalo de nuevo.",
+    "internal": "Algo salió mal por nuestra parte. Inténtalo de nuevo.",
+    "not_found": "No se encontró esa habilidad.",
+    "regeneration_cap_reached": "Has alcanzado el límite de regeneración para este plan. Hablemos de ajustar tu objetivo o plazo."
+  },
+  "skills": {
+    "addSkill": "Añadir habilidad",
+    "namePlaceholder": "¿Qué quieres aprender?",
+    "duplicateTitle": "¿Ya estás aprendiendo esto?",
+    "duplicateBody": "Ya tienes \"{{name}}\" en tu lista.",
+    "duplicateContinue": "Continuar la existente",
+    "duplicateNew": "Empezar una nueva",
+    "emptyState": "Aún no hay habilidades — añade una para empezar."
+  },
+  "plan": {
+    "title": "Tu plan",
+    "regenerate": {
+      "title": "¿Quieres ajustar este plan?",
+      "tooMuch": "Demasiado",
+      "tooEasy": "Muy fácil",
+      "notQuiteRight": "No es lo que esperaba",
+      "notePlaceholder": "¿Algo específico? (opcional)",
+      "submit": "Regenerar",
+      "capReachedTitle": "Ajustemos tu plan"
+    },
+    "chatButton": "Chatear sobre esta habilidad"
+  },
+  "progress": {
+    "title": "Progreso",
+    "viewLink": "Ver progreso",
+    "streak": "Racha de {{count}} días",
+    "stepsComplete": "{{completed}} de {{total}} pasos completados",
+    "behindCadence": "Atrasado",
+    "onCadence": "Al día"
+  },
+  "dashboard": {
+    "staleBadge": "Inactivo",
+    "staleDataBanner": "Mostrando datos guardados — no se pudo actualizar ahora.",
+    "reviseAction": "Ajustar objetivo",
+    "startNewAction": "Empezar algo nuevo",
+    "markComplete": "Marcar como completo",
+    "logPartial": "Registrar parcial"
+  }
+}

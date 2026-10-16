@@ -1,0 +1,45 @@
+name: Health Check
+
+# 005, research.md R6: the third of three scheduled workflows whose
+# FAILURE is the alert. Probes the deployed API's /health every 30
+# minutes -- catches the warm host itself being down, not just a slow
+# request. Deliberately failed once via workflow_dispatch (health_url
+# pointed at something invalid) during validation to prove the email
+# actually arrives.
+#
+# While the API is on Render's free plan (spins down after ~15 min idle,
+# ~40s cold start), a 15s timeout failed every run. Until the Render
+# Starter upgrade (T060), the probe allows 90s and retries once, so it
+# alerts on "down", not on "asleep". Tighten back to 15s once warm.
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      health_url:
+        description: "Override the health-check URL for this run (e.g. an invalid URL to force a failure)"
+        required: false
+
+env:
+  HEALTH_URL: ${{ inputs.health_url || vars.HEALTH_URL }}
+
+jobs:
+  healthcheck:
+    if: ${{ inputs.health_url || vars.HEALTH_URL }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe /health
+        run: |
+          for attempt in 1 2; do
+            # curl already prints 000 on timeout/connection failure; `|| true`
+            # keeps -e from aborting without appending a second "000".
+            status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 90 "$HEALTH_URL" || true)
+            echo "Attempt $attempt: status=$status"
+            if [ "$status" = "200" ]; then
+              exit 0
+            fi
+            [ "$attempt" = 1 ] && sleep 10
+          done
+          echo "Health check failed (status=$status)"
+          exit 1

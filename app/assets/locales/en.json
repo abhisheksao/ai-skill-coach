@@ -1,0 +1,6 @@
+{
+  "ios": {
+    "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to use the microphone to hear you during a coaching session.",
+    "NSSpeechRecognitionUsageDescription": "Allow $(PRODUCT_NAME) to use speech recognition to turn what you say into text."
+  }
+}

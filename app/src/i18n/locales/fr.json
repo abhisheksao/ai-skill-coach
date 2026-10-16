@@ -1,0 +1,117 @@
+{
+  "common": {
+    "appName": "Skill Coach",
+    "continue": "Continuer",
+    "retry": "Réessayer",
+    "loading": "Chargement…",
+    "or": "ou",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "auth": {
+    "signIn": "Se connecter",
+    "signUp": "Créer un compte",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "signInWithGoogle": "Continuer avec Google",
+    "signInWithApple": "Continuer avec Apple",
+    "noAccount": "Nouveau ici ? Créez un compte",
+    "haveAccount": "Déjà un compte ? Connectez-vous",
+    "signOut": "Se déconnecter",
+    "errors": {
+      "invalidCredentials": "L'e-mail ou le mot de passe ne correspond pas.",
+      "accountExists": "Un compte existe déjà avec cet e-mail — connectez-vous.",
+      "generic": "Échec de la connexion. Veuillez réessayer."
+    },
+    "checkEmail": "Vérifiez votre e-mail pour confirmer votre compte, puis connectez-vous."
+  },
+  "profile": {
+    "title": "Presque fini",
+    "subtitle": "Quelques détails avant de commencer.",
+    "language": "Langue",
+    "displayName": "Comment le coach doit-il vous appeler ? (facultatif)",
+    "consent": "J'accepte la politique de confidentialité et d'utilisation des données",
+    "viewPolicy": "Lire la politique"
+  },
+  "chat": {
+    "placeholder": "Écrivez à votre coach…",
+    "send": "Envoyer",
+    "emptyState": "Dites bonjour à votre coach pour commencer.",
+    "sendFailed": "Non envoyé",
+    "retrySend": "Réessayer"
+  },
+  "voice": {
+    "micButtonLabel": "Parler",
+    "listening": "Écoute…",
+    "lowConfidenceHint": "Nous ne sommes pas sûrs d'avoir bien compris — vérifiez avant d'envoyer.",
+    "spokenReplies": "Réponses vocales",
+    "permissionDeniedGuidance": "La voix est désactivée car l'accès au micro a été refusé. Activez-le dans les réglages de l'appareil pour utiliser la voix.",
+    "unavailableGuidance": "La voix n'est pas disponible sur cet appareil pour le moment. Vous pouvez continuer à utiliser le chat.",
+    "holdToSpeak": "Maintenez appuyé pour parler",
+    "connectionLost": "Connexion perdue — vos mots sont enregistrés ci-dessous. Vérifiez votre connexion et réessayez.",
+    "audioFocusLost": "Interrompu — vos mots sont enregistrés ci-dessous. Appuyez sur le micro pour continuer quand vous êtes prêt.",
+    "ttsUnavailableBanner": "Les réponses vocales ne fonctionnent pas pour le moment — les réponses resteront affichées en texte."
+  },
+  "onboarding": {
+    "pushToTalkTitle": "Maintenez pour parler",
+    "pushToTalkBody": "Maintenez le bouton micro à tout moment pour parler à votre coach au lieu d'écrire.",
+    "notificationsTitle": "Restez sur la bonne voie",
+    "notificationsBody": "Nous vous enverrons un petit rappel si vous prenez du retard sur une étape — seulement quand c'est utile, jamais envahissant.",
+    "skip": "Passer",
+    "enableNudges": "Activer les rappels"
+  },
+  "settings": {
+    "title": "Réglages",
+    "saved": "Enregistré.",
+    "deleteAccount": "Supprimer le compte"
+  },
+  "errors": {
+    "budget_exceeded": "Vous avez atteint la limite de coaching du jour. À demain !",
+    "budget_exhausted_reply": "J'ai atteint la limite de conversation d'aujourd'hui pour l'instant — je serai de nouveau prêt vers {{resetTime}}.",
+    "llm_unavailable": "Le coach n'a pas pu répondre. Veuillez réessayer.",
+    "network": "Pas de connexion. Votre message est conservé — réessayez une fois en ligne.",
+    "unauthorized": "Votre session a expiré. Veuillez vous reconnecter.",
+    "validation": "Quelque chose ne va pas — vérifiez et réessayez.",
+    "internal": "Une erreur est survenue de notre côté. Veuillez réessayer.",
+    "not_found": "Cette compétence est introuvable.",
+    "regeneration_cap_reached": "Vous avez atteint la limite de régénération pour ce plan. Parlons plutôt d'ajuster votre objectif ou votre échéance."
+  },
+  "skills": {
+    "addSkill": "Ajouter une compétence",
+    "namePlaceholder": "Que voulez-vous apprendre ?",
+    "duplicateTitle": "Vous apprenez déjà cela ?",
+    "duplicateBody": "Vous avez déjà \"{{name}}\" dans votre liste.",
+    "duplicateContinue": "Continuer l'existante",
+    "duplicateNew": "Commencer une nouvelle",
+    "emptyState": "Pas encore de compétences — ajoutez-en une pour commencer."
+  },
+  "plan": {
+    "title": "Votre plan",
+    "regenerate": {
+      "title": "Envie d'ajuster ce plan ?",
+      "tooMuch": "Trop intense",
+      "tooEasy": "Trop facile",
+      "notQuiteRight": "Pas tout à fait",
+      "notePlaceholder": "Quelque chose de précis ? (facultatif)",
+      "submit": "Régénérer",
+      "capReachedTitle": "Ajustons votre plan"
+    },
+    "chatButton": "Discuter de cette compétence"
+  },
+  "progress": {
+    "title": "Progrès",
+    "viewLink": "Voir les progrès",
+    "streak": "Série de {{count}} jours",
+    "stepsComplete": "{{completed}} étapes sur {{total}} terminées",
+    "behindCadence": "En retard",
+    "onCadence": "À jour"
+  },
+  "dashboard": {
+    "staleBadge": "Inactif",
+    "staleDataBanner": "Données enregistrées affichées — actualisation impossible pour l'instant.",
+    "reviseAction": "Ajuster l'objectif",
+    "startNewAction": "Démarrer un nouveau projet",
+    "markComplete": "Marquer comme terminé",
+    "logPartial": "Enregistrer partiel"
+  }
+}

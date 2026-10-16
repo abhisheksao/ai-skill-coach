@@ -1,0 +1,16 @@
+# Secrets — never commit (Constitution: secrets stay out of the repo)
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+.idea/
+
+# Dependencies & build output (app/ and api/ will arrive in feature 001)
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+dist/
+build/

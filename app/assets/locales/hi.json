@@ -1,0 +1,6 @@
+{
+  "ios": {
+    "NSMicrophoneUsageDescription": "कोचिंग सेशन के दौरान आपकी आवाज़ सुनने के लिए $(PRODUCT_NAME) को माइक्रोफ़ोन का उपयोग करने दें।",
+    "NSSpeechRecognitionUsageDescription": "आपकी बात को टेक्स्ट में बदलने के लिए $(PRODUCT_NAME) को स्पीच रिकग्निशन का उपयोग करने दें।"
+  }
+}

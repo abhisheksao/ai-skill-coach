@@ -1,0 +1,45 @@
+appId: com.anonymous.skillcoach
+---
+# 003 US1 -- native push-to-talk. Device-dependent like session-persists.yaml
+# (requires MAESTRO_EMAIL/MAESTRO_PASSWORD already past the profile step)
+# AND requires a REAL human to speak during the run once the "Speak"
+# button is held -- Maestro has no audio-injection primitive, so the
+# scripted portion below can only prove the mechanical parts (mic control
+# present, hold triggers the listening state, permission prompt handled);
+# the actual transcript content and successful send need a person present.
+# Not yet run on a device this session -- tracked as deferred alongside
+# the existing iOS-device gap (specs/README.md).
+- launchApp
+# Cold start on this device is genuinely slow to clear the splash screen
+# -- confirmed via logcat live: `ActivityManager: Displayed
+# com.anonymous.skillcoach/.MainActivity: +42s331ms` on a OnePlus 3
+# (2016 hardware). Not a bug, just this device's real boot time -- both
+# waits below need a generous budget, not just a present/absent check.
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 60000
+    optional: true
+- runFlow:
+    when:
+      visible: "Sign in"
+    commands:
+      - runFlow: shared/sign-in.yaml
+- extendedWaitUntil:
+    visible: "Add skill"
+    timeout: 60000
+# Waits on "Add skill" specifically, not "Skill Coach" -- the latter is
+# also the app-name branding shown on the sign-in screen itself, so it
+# was satisfying this assertion before auth navigation actually landed
+# on the skills list (found live 2026-07-17, caused a false "Add skill
+# not found" failure racing the post-sign-in navigation).
+- tapOn: "Add skill"
+- inputText: "Maestro Voice Test"
+- tapOn: "Continue"
+- assertVisible: "Speak"
+# Maestro auto-grants Android runtime permissions by default (RECORD_AUDIO
+# already declared in the manifest via the config plugin), so no manual
+# permission-dialog handling step is needed here.
+- longPressOn: "Speak"
+# A human must speak a short phrase now (e.g. "I want to learn to swim")
+# while "Listening…" is visible, then release.
+- assertVisible: "Listening…"

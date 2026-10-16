@@ -1,0 +1,117 @@
+{
+  "common": {
+    "appName": "Skill Coach",
+    "continue": "Continue",
+    "retry": "Retry",
+    "loading": "Loading…",
+    "or": "or",
+    "save": "Save changes",
+    "cancel": "Cancel"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "signInWithGoogle": "Continue with Google",
+    "signInWithApple": "Continue with Apple",
+    "noAccount": "New here? Create an account",
+    "haveAccount": "Already have an account? Sign in",
+    "signOut": "Sign out",
+    "errors": {
+      "invalidCredentials": "That email or password doesn't match.",
+      "accountExists": "An account with this email already exists — sign in instead.",
+      "generic": "Sign-in failed. Please try again."
+    },
+    "checkEmail": "Check your email to confirm your account, then sign in."
+  },
+  "profile": {
+    "title": "Almost there",
+    "subtitle": "A couple of details before we start.",
+    "language": "Language",
+    "displayName": "What should the coach call you? (optional)",
+    "consent": "I agree to the privacy & data-use policy",
+    "viewPolicy": "Read the policy"
+  },
+  "chat": {
+    "placeholder": "Message your coach…",
+    "send": "Send",
+    "emptyState": "Say hello to your coach to get started.",
+    "sendFailed": "Not sent",
+    "retrySend": "Retry"
+  },
+  "voice": {
+    "micButtonLabel": "Speak",
+    "listening": "Listening…",
+    "lowConfidenceHint": "We're not sure we got that right — please check before sending.",
+    "spokenReplies": "Spoken replies",
+    "permissionDeniedGuidance": "Voice is off because microphone access was denied. Enable it in your device settings to use voice.",
+    "unavailableGuidance": "Voice isn't available on this device right now. You can keep using chat.",
+    "holdToSpeak": "Hold to speak",
+    "connectionLost": "Connection lost — your words are saved below. Check your connection and try again.",
+    "audioFocusLost": "Interrupted — your words are saved below. Tap the mic to keep going when you're ready.",
+    "ttsUnavailableBanner": "Spoken replies aren't working right now — replies will still show as text."
+  },
+  "onboarding": {
+    "pushToTalkTitle": "Hold to speak",
+    "pushToTalkBody": "Press and hold the mic button any time to talk with your coach instead of typing.",
+    "notificationsTitle": "Stay on track",
+    "notificationsBody": "We'll send a gentle nudge if you fall behind on a step — only when it's useful, never spammy.",
+    "skip": "Skip",
+    "enableNudges": "Enable nudges"
+  },
+  "settings": {
+    "title": "Settings",
+    "saved": "Saved.",
+    "deleteAccount": "Delete account"
+  },
+  "errors": {
+    "budget_exceeded": "You've reached today's coaching limit. Let's pick this up tomorrow!",
+    "budget_exhausted_reply": "I've reached today's conversation limit for now — I'll be ready again around {{resetTime}}.",
+    "llm_unavailable": "The coach couldn't respond just now. Please try again.",
+    "network": "No connection. Your message is kept — retry when you're back online.",
+    "unauthorized": "Your session expired. Please sign in again.",
+    "validation": "That didn't look right — please check and try again.",
+    "internal": "Something went wrong on our side. Please try again.",
+    "not_found": "That skill couldn't be found.",
+    "regeneration_cap_reached": "You've reached the regeneration limit for this plan. Let's talk about adjusting your goal or timeline instead."
+  },
+  "skills": {
+    "addSkill": "Add skill",
+    "namePlaceholder": "What do you want to learn?",
+    "duplicateTitle": "Already learning this?",
+    "duplicateBody": "You already have \"{{name}}\" in your list.",
+    "duplicateContinue": "Continue existing",
+    "duplicateNew": "Start a new pursuit",
+    "emptyState": "No skills yet — add one to get started."
+  },
+  "plan": {
+    "title": "Your plan",
+    "regenerate": {
+      "title": "Want to adjust this plan?",
+      "tooMuch": "Too much",
+      "tooEasy": "Too easy",
+      "notQuiteRight": "Not quite right",
+      "notePlaceholder": "Anything specific? (optional)",
+      "submit": "Regenerate",
+      "capReachedTitle": "Let's adjust your plan"
+    },
+    "chatButton": "Chat about this skill"
+  },
+  "progress": {
+    "title": "Progress",
+    "viewLink": "View progress",
+    "streak": "{{count}}-day streak",
+    "stepsComplete": "{{completed}} of {{total}} steps complete",
+    "behindCadence": "Behind",
+    "onCadence": "On track"
+  },
+  "dashboard": {
+    "staleBadge": "Stale",
+    "staleDataBanner": "Showing saved data — couldn't refresh just now.",
+    "reviseAction": "Revise goal",
+    "startNewAction": "Start new pursuit",
+    "markComplete": "Mark complete",
+    "logPartial": "Log partial"
+  }
+}

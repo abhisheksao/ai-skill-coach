@@ -1,0 +1,15 @@
+[project]
+name = "coach-core"
+version = "0.1.0"
+description = "Reusable engine for AI coaching apps: auth, budget guard, rate-limit queue, Supabase REST, logging"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+dependencies = [
+    "fastapi>=0.139.0",
+    "httpx>=0.28.1",
+    "pyjwt[crypto]>=2.13.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12.0"]
+build-backend = "uv_build"

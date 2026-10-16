@@ -1,0 +1,39 @@
+name: Nightly Graph Export
+
+# 005, research.md R5: exports the full coaching graph to a private
+# Supabase Storage bucket every night. Runs OUTSIDE the API host so
+# backups still happen when the backend itself is broken. Doubles as the
+# Aura keep-alive touch (Aura Free pauses after ~3 idle days). Failure ->
+# GitHub's workflow-failure email is the missed-export alert -- deliberately
+# failed once via workflow_dispatch (neo4j_uri_override pointed at an
+# invalid host, same pattern as spend-check's threshold_override and
+# healthcheck's health_url -- never the real secret) during validation
+# to prove the email arrives before this is trusted.
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # nightly, 02:00 UTC
+  workflow_dispatch:
+    inputs:
+      neo4j_uri_override:
+        description: "Override NEO4J_URI for this run (e.g. an invalid host to force a failure)"
+        required: false
+
+jobs:
+  export:
+    if: ${{ vars.OPS_WORKFLOWS_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    env:
+      NEO4J_URI: ${{ inputs.neo4j_uri_override || secrets.NEO4J_URI }}
+      NEO4J_USER: ${{ secrets.NEO4J_USER }}
+      NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
+      - run: uv run python scripts/export_graph.py

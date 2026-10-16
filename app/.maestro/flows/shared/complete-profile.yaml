@@ -1,0 +1,7 @@
+appId: com.anonymous.skillcoach
+---
+# Reusable subflow: completes the post-signup profile step (language stays
+# at its device-locale default; only consent is required to continue).
+- assertVisible: "Language"
+- tapOn: "I agree to the privacy & data-use policy"
+- tapOn: "Continue"

@@ -1,0 +1,55 @@
+name: CI
+
+# 001's FR-008 deferred this to 005 (T062) -- the PAT used earlier lacked
+# `workflow` scope to push workflow files at all. Runs lint + tests for
+# both api/ and app/ on every push/PR so regressions are caught before
+# merge, not just by whoever remembers to run them locally.
+#
+# app/ uses `npm ci` against the committed app/package-lock.json, so
+# CI, Render and fresh clones install exactly the tested versions. It was
+# once uncommitted (the developer's personal global gitignore excludes
+# lockfiles -- add updates with `git add -f`), and `npm install` drifted:
+# a newer ~57.0.x jest-expo patch required @react-native/jest-preset
+# ^0.86.2 (unsatisfiable with react-native@0.86.0) and the preset check
+# failed outright. Keep SDK modules aligned with `npx expo install
+# --check` (see docs/dependency-audit.md). Do NOT add --legacy-peer-deps: it disables npm's peer auto-install, which
+# is how @react-native/jest-preset actually gets installed at all.
+# node-version 22 (not 20): @supabase/realtime-js needs a native
+# WebSocket global, only present from Node 22+; matches the
+# developer's local Node (22.22.2), which is why this was invisible
+# locally on Node 20-targeted CI.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync --frozen
+      - run: uv run ruff check .
+      - run: uv run pytest -q
+
+  app:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run lint
+      - run: npm test -- --ci

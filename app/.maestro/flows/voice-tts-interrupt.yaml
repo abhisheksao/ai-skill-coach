@@ -1,0 +1,34 @@
+appId: com.anonymous.skillcoach
+---
+# 003 US2 -- native TTS interrupt. Device-dependent like
+# voice-push-to-talk.yaml. Requires an existing conversation with at least
+# one prior coach reply (Maestro has no admin-API seeding for this, unlike
+# Playwright's support/db.ts) -- run voice-push-to-talk.yaml first, or
+# manually send one text message before this flow, so there's a reply to
+# interrupt. Not yet run on a device this session -- tracked as deferred
+# alongside the existing iOS-device gap (specs/README.md).
+- launchApp
+# Cold start on this device is genuinely slow to clear the splash screen
+# (see voice-push-to-talk.yaml's same fix, confirmed live).
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 60000
+    optional: true
+- runFlow:
+    when:
+      visible: "Sign in"
+    commands:
+      - runFlow: shared/sign-in.yaml
+- extendedWaitUntil:
+    visible: "Skill Coach"
+    timeout: 60000
+# Assumes a conversation already showing at least one coach reply
+# (spoken automatically on arrival if "Spoken replies" is on in Settings,
+# which is the default). While it's speaking:
+- longPressOn: "Speak"
+# The recording state itself proves the interrupt happened -- if playback
+# hadn't stopped, expo-speech's queue would still hold the utterance, but
+# there's no first-class Maestro assertion for "audio is not playing";
+# this flow only mechanically proves recording started right after the
+# hold, which is what start()'s unconditional Speech.stop() call gates.
+- assertVisible: "Listening…"

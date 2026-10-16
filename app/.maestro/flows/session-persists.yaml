@@ -1,0 +1,66 @@
+appId: com.anonymous.skillcoach
+---
+# Native session persistence across a full app kill (AsyncStorage --
+# app/src/lib/supabase.ts uses AsyncStorage on native, not localStorage,
+# so this is a genuinely different code path than Playwright's web
+# reload test in e2e/playwright/tests/foundations.spec.ts). Requires
+# MAESTRO_EMAIL/MAESTRO_PASSWORD (.maestro/.env, copy from .env.example)
+# to already be past the profile step -- complete it by hand once if
+# this is a brand-new account, since Maestro has no admin-API throwaway/
+# seeding helper the way Playwright's support/seed-test-users.ts does.
+#
+# Three real gaps found + fixed 2026-08-27 running this live on a
+# physical device (OnePlus 3, Android 9 -- same device 004/005's own
+# notes flag as having wildly variable cold-start time, once 23s+ after
+# a clearState launch), likely this flow's first-ever actual execution:
+# (1) this flow went straight from `launchApp: clearState: true` into
+# the sign-in subflow with no wait, so on a slow boot Maestro tried to
+# tap "Email" before the sign-in screen had even rendered -- added the
+# same extendedWaitUntil pattern already used by voice-failures-005.yaml.
+# (2) both the sign-in screen (small brand label) and the dashboard
+# (title, `common.appName`) render the literal text "Skill Coach" --
+# `assertVisible: "Skill Coach"` could false-match while still on
+# sign-in, exactly the ambiguous-text bug already fixed in the three
+# voice-*.yaml flows (there resolved by waiting on "Add skill" instead,
+# which is dashboard-only). Applied the same fix here. (3) 005's
+# first-run "welcome" explainer (research.md R12) is gated on an
+# AsyncStorage flag that `clearState: true` also wipes -- so a fresh
+# clearState launch now lands on /welcome, not the dashboard, after
+# sign-in, for ANY account, not just genuinely-new ones. Added a "Skip"
+# tap (welcome.tsx's finish() marks the flag and routes to /dashboard
+# from either card) before waiting on "Add skill" -- this screen didn't
+# exist when 001 first wrote this flow.
+#
+# Also found (separate from this flow, but hit while running it): the
+# sign-in screen's heading and its submit button both render the exact
+# text "Sign in" (`t('auth.signIn')` used for both) -- `tapOn: "Sign in"`
+# was silently tapping the non-interactive heading. Fixed at the source
+# in shared/sign-in.yaml (now taps a `sign-in-submit` testID) plus the
+# app itself (app/src/app/(auth)/sign-in.tsx,
+# app/src/components/primary-button.tsx).
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 60000
+- runFlow: shared/sign-in.yaml
+# A plain `tapOn: optional: true` gives up on a much shorter implicit
+# timeout than extendedWaitUntil -- can race past a still-loading
+# /welcome screen (found live in voice-failures-005.yaml's own run).
+# Wait properly first.
+- extendedWaitUntil:
+    visible: "Skip"
+    timeout: 30000
+    optional: true
+- tapOn:
+    text: "Skip"
+    optional: true
+- extendedWaitUntil:
+    visible: "Add skill"
+    timeout: 60000
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible: "Add skill"
+    timeout: 60000
+- assertNotVisible: "Sign in"

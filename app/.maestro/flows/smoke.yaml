@@ -1,0 +1,9 @@
+appId: com.anonymous.skillcoach
+---
+# Proves the harness end-to-end (Maestro -> connected device/emulator ->
+# dev build) before any scenario coverage is written -- no seeded account
+# needed, matches app/e2e/playwright/tests/smoke.spec.ts's role for the web
+# suite.
+- launchApp
+- assertVisible: "Skill Coach"
+- assertVisible: "Sign in"

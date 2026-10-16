@@ -1,0 +1,16 @@
+appId: com.anonymous.skillcoach
+---
+# Reusable subflow: navigates from /sign-in to /sign-up and submits a new
+# account. Only used by specs that specifically need a FRESH account (most
+# flows should just runFlow sign-in.yaml against the one seeded account
+# instead, to avoid creating throwaway users on every run).
+- tapOn: "New here? Create an account"
+- tapOn:
+    below: "Email"
+- inputText: "${MAESTRO_EMAIL}"
+- hideKeyboard
+- tapOn:
+    below: "Password"
+- inputText: "${MAESTRO_PASSWORD}"
+- hideKeyboard
+- tapOn: "Create account"

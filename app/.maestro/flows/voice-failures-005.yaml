@@ -1,0 +1,141 @@
+appId: com.anonymous.skillcoach
+---
+# 005 US3 -- device cells of the R9 voice/chat failure matrix.
+#
+# V2 (permission revoked mid-session) is approximated, not literally
+# reproduced: Maestro's DSL has no "revoke permission while the app is
+# running" action (its `permissions` map only applies at `launchApp`).
+# The closest scriptable equivalent -- record successfully once, then
+# relaunch with the permission pre-denied (simulating the user revoking
+# it in OS Settings and returning to the app) -- exercises the SAME code
+# path use-voice-session.ts's start() takes either way (it re-checks
+# getPermissionsAsync on every press, not just once at mount), and R9's
+# own table says V2 renders "the same guidance state" as V1 -- so this
+# is a faithful proof of the state transition even though the trigger is
+# approximated. A TRUE mid-recording interrupt would need a real device
+# operator toggling the OS permission live (as 004's session notes did
+# via `adb shell appops set ... deny` outside of Maestro entirely) --
+# tracked in docs/testing.md's manual matrix (T063), not scripted here.
+#
+# V6 (TTS failure) and V7 (audio focus loss / true mid-call interrupt)
+# have no reliable device-level trigger Maestro can script either
+# (forcing a real synthesis engine failure, or a real incoming call) --
+# both explicitly deferred to the manual matrix per T038's own scope.
+#
+# NOT YET RUN on a device this session (no physical device connected) --
+# written for the next device session, same "write now, run later"
+# precedent as 003's voice-tts-interrupt.yaml.
+#
+# Run for real 2026-08-27 (first-ever execution) and fixed three gaps
+# found via session-persists.yaml hitting the first two issues first:
+# (1) shared/sign-in.yaml's "Sign in" tap was landing on the sign-in
+# screen's heading, not the button, since both render the same literal
+# text -- fixed at the source (now taps a `sign-in-submit` testID).
+# (2) 005's first-run "welcome" explainer is gated on an AsyncStorage
+# flag that `clearState: true` also wipes, so a fresh clearState launch
+# lands on /welcome, not the dashboard, after sign-in -- added a "Skip"
+# tap (welcome.tsx's finish() marks the flag and routes to /dashboard).
+# (3) `releaseOn` is not a real Maestro command -- this flow had never
+# been parsed before (confirmed by this note's own "NOT YET RUN" above).
+# `longPressOn` already performs the full press-hold-release gesture as
+# one atomic action, so the separate release step was both invalid and
+# unnecessary -- removed.
+- launchApp:
+    clearState: true
+    permissions:
+      microphone: allow
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 60000
+- runFlow: shared/sign-in.yaml
+# A plain `tapOn: optional: true` gives up on a much shorter implicit
+# timeout than extendedWaitUntil -- found live it can race past a
+# still-loading /welcome screen and warn "Skip not found" while actually
+# still mid-transition, then hang the next wait (dashboard never loads
+# because /welcome was never dismissed). Wait properly first.
+- extendedWaitUntil:
+    visible: "Skip"
+    timeout: 30000
+    optional: true
+- tapOn:
+    text: "Skip"
+    optional: true
+- extendedWaitUntil:
+    visible: "Add skill"
+    timeout: 60000
+- tapOn: "Add skill"
+- inputText: "Maestro V2 Test"
+- tapOn: "Continue"
+- assertVisible: "Speak"
+
+# Baseline: exercise the same start-recording code path V2's re-check
+# below relies on. NOT asserting "Listening…" here -- found live that
+# Maestro's `longPressOn` performs the full press-hold-release gesture
+# as one blocking action, so by the time the next command runs the
+# button has already been released and the transient "Listening…" state
+# has already cleared (this app shows it only while actually pressed,
+# not until a transcript arrives). Proving it visually needs a live
+# human holding the screen down, same as voice-push-to-talk.yaml
+# already documents for its own longPressOn+assertVisible pair -- added
+# to docs/testing.md's manual matrix instead of a flaky scripted assert.
+- longPressOn: "Speak"
+
+# Simulate returning to the app after revoking mic access in OS Settings:
+# relaunch (no clearState -- keep the session) with the permission now
+# denied, then press the mic again -- this is the "on next press"
+# re-check R9 describes for V2.
+#
+# Found live, two layers deep: (1) a cold `launchApp` does NOT resume
+# the previous in-app screen (Expo Router has no cross-restart
+# navigation-state restore here) -- it re-runs the auth gate fresh,
+# landing on /dashboard. (2) worse, tapping back into "Maestro V2 Test"
+# from the dashboard doesn't work either, because it was never actually
+# created: per this app's own established design (002's plan.md --
+# wizard has NO server-side state, the skill/goal/plan write is atomic
+# at wizard COMPLETION, not at intake), typing a name and tapping
+# "Continue" only starts a conversation -- one scripted turn in is not
+# enough to persist a Skill node, so no matching dashboard card ever
+# exists to tap back into. Simplest robust fix: don't depend on the
+# first attempt's skill existing at all -- just start a second, fresh
+# wizard conversation the same way (Add skill -> name -> Continue) to
+# reach a chat screen with "Speak" again, deterministically.
+- launchApp:
+    clearState: false
+    permissions:
+      microphone: deny
+- extendedWaitUntil:
+    visible: "Add skill"
+    timeout: 60000
+# Found live: `expo-notifications`' push-token-update fetch gets
+# cancelled by this relaunch (a benign race, same failure mode as
+# use-push-notifications.ts's other known fails-soft paths), which pops
+# a dev-only LogBox toast across the bottom of the screen -- directly
+# over the FAB. It isn't part of the app's own accessibility tree (a
+# native overlay window, confirmed via uiautomator dump showing no such
+# node), so `tapOn: "Add skill"` reports COMPLETED yet the tap is
+# actually swallowed by the toast. A point-tap in that same bottom-right
+# corner harmlessly dismisses the toast if present, or opens the FAB
+# itself if it isn't (same call the very next line makes anyway) --
+# either way this is safe.
+- tapOn:
+    point: "95%, 97%"
+    optional: true
+- tapOn:
+    text: "Add skill"
+    optional: true
+- inputText: "Maestro V2 Retry"
+- tapOn: "Continue"
+- assertVisible: "Speak"
+- longPressOn: "Speak"
+- tapOn:
+    text: "Don't Allow|Deny|Don't allow"
+    optional: true
+- assertVisible: "Voice is off because microphone access was denied"
+
+# Chat remains fully functional despite the revoke -- the composer is
+# never disabled by any voice failure state (R9's blanket rule).
+- tapOn:
+    below: "Send"
+    optional: true
+- inputText: "Still works after revoke"
+- assertVisible: "Still works after revoke"

@@ -1,0 +1,78 @@
+# Render Blueprint: Dashboard -> New -> Blueprint -> select your fork ->
+# Apply, then fill in the `sync: false` values it prompts for (same values
+# as your api/.env and app/.env). See docs/getting-started.md, step 8.
+#
+# Both services start on Render's free plan. A free web service sleeps
+# after ~15 min idle (cold start up to ~1 min); switch skillcoach-api to
+# `plan: starter` for an always-on host before real users -- voice latency
+# depends on it. The static site is free on every plan.
+
+services:
+  - type: web
+    name: skillcoach-api
+    runtime: python
+    plan: free
+    rootDir: api
+    buildCommand: pip install uv && uv sync --frozen
+    startCommand: .venv/bin/uvicorn skillcoach_api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      # --- secrets (prompted on first Apply)
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWKS_URL
+        sync: false
+      - key: NEO4J_URI
+        sync: false
+      - key: NEO4J_USER
+        sync: false
+      - key: NEO4J_PASSWORD
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      # Must match the X-Internal-Secret in your Supabase cron jobs
+      # (supabase/cron.sql.template).
+      - key: INTERNAL_SECRET
+        sync: false
+      # Comma-separated. Add your static site's URL once Render assigns it.
+      - key: CORS_ORIGINS
+        sync: false
+      # --- plain config (model/tier switch is config-only)
+      - key: LLM_MODEL
+        value: gemini-3.1-flash-lite
+      - key: DAILY_LLM_BUDGET
+        value: "50"
+      - key: POLICY_URL
+        value: https://example.com/skillcoach-policy
+
+  - type: web
+    name: skillcoach-ui
+    runtime: static
+    rootDir: app
+    buildCommand: npm install && npx expo export --platform web --clear
+    staticPublishPath: ./dist
+    autoDeploy: true
+    routes:
+      # expo-router's static output has no file for a direct load of a
+      # dynamic route (e.g. /skill/<id>/progress); fall back to index.html
+      # so the client-side router resolves it.
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      # EXPO_PUBLIC_* values are inlined into the client bundle at build
+      # time. The anon key is safe client-side (Row Level Security).
+      - key: EXPO_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: EXPO_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      # The skillcoach-api URL shown in the Render dashboard.
+      - key: EXPO_PUBLIC_API_URL
+        sync: false
+      - key: EXPO_PUBLIC_DELETE_ACCOUNT_URL
+        value: https://example.com/skillcoach-delete-account
