@@ -67,7 +67,7 @@ Rules that hold across the codebase
 | Path | What |
 |---|---|
 | `app/` | Expo app: TypeScript, expo-router |
-| `app/packages/core/` | `@ai-skill-coach/core`: reusable client pieces (theme, voice, Supabase/OAuth/API client factories) |
+| `app/packages/core/` | `@abhisheksao/ai-skill-coach-core`: reusable client pieces (theme, voice, Supabase/OAuth/API client factories) |
 | `api/` | FastAPI backend: Python 3.12, uv |
 | `api/packages/coach-core/` | `coach-core`: reusable backend pieces (auth/JWKS, Supabase REST, LLM queue, budget, analytics) |
 | `supabase/` | Postgres migrations and the cron-job template |

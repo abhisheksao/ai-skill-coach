@@ -1,9 +1,21 @@
 {
-  "name": "@ai-skill-coach/core",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@abhisheksao/ai-skill-coach-core",
+  "version": "0.1.1",
   "license": "Apache-2.0",
   "description": "Reusable Expo building blocks for AI coaching apps: Supabase auth + OAuth, API client, voice session, design tokens, base components.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhisheksao/ai-skill-coach.git",
+    "directory": "app/packages/core"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "src",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx"
+  ],
   "exports": {
     "./api-client": "./src/api-client.ts",
     "./oauth": "./src/oauth.ts",

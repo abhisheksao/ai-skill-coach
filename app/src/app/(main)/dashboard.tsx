@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 
 import { DuplicateSkillDialog } from '@/components/duplicate-skill-dialog';
-import { PrimaryButton } from '@ai-skill-coach/core/components/primary-button';
-import { Screen } from '@ai-skill-coach/core/components/screen';
-import { TextField } from '@ai-skill-coach/core/components/text-field';
+import { PrimaryButton } from '@abhisheksao/ai-skill-coach-core/components/primary-button';
+import { Screen } from '@abhisheksao/ai-skill-coach-core/components/screen';
+import { TextField } from '@abhisheksao/ai-skill-coach-core/components/text-field';
 import { ApiError, DashboardSkillCard, getDashboard, postIntentApply, UiIntent } from '@/lib/api';
 import { readCachedDashboard, writeCachedDashboard } from '@/lib/dashboard-cache';
 import { findDuplicate } from '@/lib/duplicate-skill';
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 function stepKey(skillId: string, order: number): string {
   return `${skillId}-${order}`;

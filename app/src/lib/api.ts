@@ -2,7 +2,7 @@
  * Typed client for the Skill Coach API. Errors carry the server's i18n
  * message_key (contracts/api.md) so screens can render them localized.
  */
-import { ApiError, createApiClient } from '@ai-skill-coach/core/api-client';
+import { ApiError, createApiClient } from '@abhisheksao/ai-skill-coach-core/api-client';
 
 import { supabase } from '@/lib/supabase';
 

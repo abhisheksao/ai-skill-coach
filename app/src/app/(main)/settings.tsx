@@ -6,14 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { LanguagePicker } from '@/components/language-picker';
-import { PrimaryButton } from '@ai-skill-coach/core/components/primary-button';
-import { Screen } from '@ai-skill-coach/core/components/screen';
-import { TextField } from '@ai-skill-coach/core/components/text-field';
+import { PrimaryButton } from '@abhisheksao/ai-skill-coach-core/components/primary-button';
+import { Screen } from '@abhisheksao/ai-skill-coach-core/components/screen';
+import { TextField } from '@abhisheksao/ai-skill-coach-core/components/text-field';
 import { SupportedLanguage } from '@/i18n';
 import { ApiError, postProfile } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { Profile, supabase } from '@/lib/supabase';
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 // 005, contracts/api.md's client-facing config note: URL swap only, no
 // build logic change -- placeholder policy page now, static page later.

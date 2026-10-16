@@ -11,11 +11,11 @@ import {
   View,
 } from 'react-native';
 
-import { PrimaryButton } from '@ai-skill-coach/core/components/primary-button';
-import { Screen } from '@ai-skill-coach/core/components/screen';
-import { TextField } from '@ai-skill-coach/core/components/text-field';
+import { PrimaryButton } from '@abhisheksao/ai-skill-coach-core/components/primary-button';
+import { Screen } from '@abhisheksao/ai-skill-coach-core/components/screen';
+import { TextField } from '@abhisheksao/ai-skill-coach-core/components/text-field';
 import { ApiError, getSkill, postRegenerate, RegenerateReason, SkillDetail } from '@/lib/api';
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 const REASONS: RegenerateReason[] = ['too_much', 'too_easy', 'not_quite_right'];
 const MAX_REGENERATIONS = 3;

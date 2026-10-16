@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 type Props = {
   visible: boolean;

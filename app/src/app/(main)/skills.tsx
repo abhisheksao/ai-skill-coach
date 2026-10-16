@@ -12,12 +12,12 @@ import {
 } from 'react-native';
 
 import { DuplicateSkillDialog } from '@/components/duplicate-skill-dialog';
-import { PrimaryButton } from '@ai-skill-coach/core/components/primary-button';
-import { Screen } from '@ai-skill-coach/core/components/screen';
-import { TextField } from '@ai-skill-coach/core/components/text-field';
+import { PrimaryButton } from '@abhisheksao/ai-skill-coach-core/components/primary-button';
+import { Screen } from '@abhisheksao/ai-skill-coach-core/components/screen';
+import { TextField } from '@abhisheksao/ai-skill-coach-core/components/text-field';
 import { ApiError, getSkills, SkillSummary } from '@/lib/api';
 import { findDuplicate } from '@/lib/duplicate-skill';
-import { spacing, type, useTheme } from '@ai-skill-coach/core/theme';
+import { spacing, type, useTheme } from '@abhisheksao/ai-skill-coach-core/theme';
 
 /** Skill list (User Story 3): cards + "Add skill" entry with a
  * client-side duplicate-name warning (FR-012, research R2/R9) -- no LLM

@@ -1,12 +1,12 @@
 /**
- * The app's Supabase client (env-configured; see @ai-skill-coach/core/supabase).
+ * The app's Supabase client (env-configured; see @abhisheksao/ai-skill-coach-core/supabase).
  *
  * Session storage is AsyncStorage per Supabase's official Expo guidance
  * (research R12): session JSON regularly exceeds expo-secure-store's 2048-byte
  * Android limit. Auth tokens are short-lived JWTs; storage hardening is
  * revisited in feature 005.
  */
-import { createSupabaseClient } from '@ai-skill-coach/core/supabase';
+import { createSupabaseClient } from '@abhisheksao/ai-skill-coach-core/supabase';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '';
