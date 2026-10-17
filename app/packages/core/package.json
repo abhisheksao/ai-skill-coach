@@ -1,6 +1,6 @@
 {
   "name": "@abhisheksao/ai-skill-coach-core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "Apache-2.0",
   "description": "Reusable Expo building blocks for AI coaching apps: Supabase auth + OAuth, API client, voice session, design tokens, base components.",
   "repository": {
@@ -13,6 +13,7 @@
   },
   "files": [
     "src",
+    "NOTICE",
     "!src/**/*.test.ts",
     "!src/**/*.test.tsx"
   ],
