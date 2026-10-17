@@ -1,6 +1,6 @@
 [project]
 name = "coach-core"
-version = "0.1.0"
+version = "0.1.2"
 description = "Reusable engine for AI coaching apps: auth, budget guard, rate-limit queue, Supabase REST, logging"
 requires-python = ">=3.12"
 license = "Apache-2.0"
