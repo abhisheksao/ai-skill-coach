@@ -6,6 +6,21 @@ conversation builds a step-by-step plan. The coach then checks in by chat
 or voice, tracks progress and nudges you when you fall behind. It
 remembers what you talked about last time.
 
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/demo.gif" width="260" alt="The wizard conversation turning a chess goal into a five-step plan"></td>
+    <td align="center"><img src="docs/images/wizard.png" width="260" alt="Wizard chat collecting a swimming goal, deadline and practice cadence"></td>
+    <td align="center"><img src="docs/images/plan.png" width="260" alt="The generated swimming plan with weekly cadence per step"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Goal to plan in three messages</sub></td>
+    <td align="center"><sub>The wizard confirms before it writes</sub></td>
+    <td align="center"><sub>Steps with a weekly cadence each</sub></td>
+  </tr>
+</table>
+
+<sub>Screenshots from the Android app.</sub>
+
 - **Clients:** web and Android (Expo / React Native). iOS builds, but
   isn't covered by the setup guide.
 - **Languages:** English, Hindi, Spanish, French and German. These cover
